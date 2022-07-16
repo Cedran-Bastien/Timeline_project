@@ -41,3 +41,14 @@ func retournerCarte(carte Carte) bool {
 	carte.recto = !carte.recto
 	return carte.recto
 }
+
+//toString
+func toString(c Carte) (res string) {
+	if c.recto {
+		res = string(c.dates) + " --> " + c.evenement
+	} else {
+		res = " ??? --> " + c.evenement
+	}
+
+	return
+}

@@ -3,6 +3,7 @@ package gestionPaquetCarte
 import (
 	"bufio"
 	"log"
+	"math/rand"
 	"os"
 )
 
@@ -38,3 +39,36 @@ func creerPaquet(chemin string) (p Paquet) {
 	return
 }
 
+//pioche une carte dans un paquet
+//la retourne
+func piocherCarte(p Paquet) (c Carte) {
+
+	//recuperation de la carte
+	indiceCarte := rand.Intn(len(p.cartes))
+	c = p.cartes[indiceCarte]
+
+	//verif
+	println(p.cartes)
+	println(toString(c))
+
+	//changement tableau pour enlever carte piocher du paquet
+	var nouveauPaquet []Carte
+	j := 0
+	for i := j; i < len(p.cartes); i++ {
+		if i == indiceCarte {
+			break
+		}
+		nouveauPaquet = append(nouveauPaquet, p.cartes[i])
+		j++
+	}
+	j++
+	for i := j; i < len(p.cartes)-1; i++ {
+		nouveauPaquet = append(nouveauPaquet, p.cartes[i+1])
+	}
+	p.cartes = nouveauPaquet
+
+	//verif
+	println(p.cartes)
+
+	return
+}

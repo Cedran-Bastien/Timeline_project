@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+loop
+main -> jeu : choisirAction()
+activate jeu
+jeu --> main : Carte c, int position
+deactivate jeu
+
+
+main -> jeu : placerCarte(c,position)
+activate jeu
+
+jeu -> c_Carte: if ()jeu.frise[position].date < c.date < jeu.frise[position+1].date)
+activate c_Carte
+c_Carte --> jeu: true
+deactivate c_Carte
+
+jeu -> jeu : ajouterCarte(frise,c,position)
+
+jeu ->jeu : piocherCarte(principale Paquet)
+
+jeu -> jeu : ajouterCarte(mainJoueur, c)
+
+jeu --> main : true
+deactivate jeu
+
+
+
+main -> jeu : placerCarte(Carte c, int position)
+activate jeu
+
+jeu -> c_Carte: if ()jeu.frise[position].date < c.date < jeu.frise[position+1].date)
+activate c_Carte
+c_Carte --> jeu: false
+deactivate c_Carte
+
+jeu --> main : false
+deactivate jeu
+end
+@enduml

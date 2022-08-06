@@ -1,0 +1,45 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+main -> paquetPrincipale_paquet:creerPaquet(string)
+activate paquetPrincipale_paquet
+paquetPrincipale_paquet --> main
+deactivate paquetPrincipale_paquet
+
+main -> jeu: creerJeu(paquetPrincipale_paquet,int i)
+activate jeu
+
+jeu -> mainJoueur_paquet:creerPaquet()
+activate mainJoueur_paquet
+
+loop i
+mainJoueur_paquet ->paquetPrincipale_paquet : piocherCarte()
+activate paquetPrincipale_paquet
+paquetPrincipale_paquet --> mainJoueur_paquet: Carte c
+deactivate paquetPrincipale_paquet
+
+mainJoueur_paquet -> mainJoueur_paquet:ajouterCarte(c)
+end loop
+
+mainJoueur_paquet -->jeu
+deactivate mainJoueur_paquet
+
+jeu -> Frise : creerFrise
+activate Frise
+
+loop 2
+mainJoueur_paquet ->paquetPrincipale_paquet : piocherCarte()
+activate paquetPrincipale_paquet
+paquetPrincipale_paquet --> mainJoueur_paquet: Carte c
+deactivate paquetPrincipale_paquet
+
+Frise -> Frise:ajouterCarteTri(c)
+end loop
+
+Frise --> jeu
+deactivate Frise
+
+jeu --> main
+deactivate jeu
+
+@enduml

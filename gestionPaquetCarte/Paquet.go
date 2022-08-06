@@ -18,7 +18,7 @@ func creerPaquet(chemin string) (p Paquet) {
 	//ouverture du fichier
 	file, err := os.Open(chemin)
 
-	//handle errors while opening
+	//gestion d'erreur ouverture fichier
 	if err != nil {
 		log.Fatalf("Error when opening file: %s", err)
 	}
@@ -29,7 +29,7 @@ func creerPaquet(chemin string) (p Paquet) {
 	for fileScanner.Scan() {
 		p.cartes = append(p.cartes, creerCarte(fileScanner.Text()))
 	}
-	// handle first encountered error while reading
+	// gestion d'erreur lecture fichier
 	if err := fileScanner.Err(); err != nil {
 		log.Fatalf("Error while reading file: %s", err)
 	}
@@ -67,8 +67,10 @@ func piocherCarte(p Paquet) (c Carte) {
 	}
 	p.cartes = nouveauPaquet
 
-	//verif
+	//veriffication
 	println(p.cartes)
 
 	return
 }
+
+//melanger paquet

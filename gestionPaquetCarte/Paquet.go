@@ -39,9 +39,9 @@ func creerPaquet(chemin string) (p Paquet) {
 	return
 }
 
-//pioche une carte dans un paquet
+// PiocherCarte pioche une carte dans un paquet
 //la retourne
-func piocherCarte(p Paquet) (c Carte) {
+func PiocherCarte(p Paquet) (c Carte) {
 
 	//recuperation de la carte
 	indiceCarte := rand.Intn(len(p.cartes))
@@ -72,5 +72,3 @@ func piocherCarte(p Paquet) (c Carte) {
 
 	return
 }
-
-//melanger paquet

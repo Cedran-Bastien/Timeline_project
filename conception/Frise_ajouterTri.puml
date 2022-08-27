@@ -1,0 +1,29 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+main -> carte : creerCarte
+activate carte
+carte --> main
+deactivate carte
+
+main -> frise : ajouterTri(carte)
+activate frise
+
+frise -> int : int = 0
+activate int
+int  --> frise
+deactivate int
+
+loop frise.frise[int].date < carte.date
+frise -> int : int++
+activate int
+int --> frise
+deactivate int
+end
+
+frise -> frise : ajouterCarte(int)
+
+frise --> main
+deactivate frise
+
+@enduml

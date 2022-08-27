@@ -1,0 +1,32 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+main -> int : int
+activate int
+int  --> main
+deactivate int
+
+main -> frise :ajouterCarte(int)
+activate frise
+
+frise -> tailleFrise_int : new (len(frise.frise))
+activate tailleFrise_int
+tailleFrise_int --> frise
+deactivate tailleFrise_int
+
+frise -> tabProvisoir_TableauCarte : new [tailleFrise+1]Carte
+activate tabProvisoir_TableauCarte
+tabProvisoir_TableauCarte --> frise
+deactivate tabProvisoir_TableauCarte
+
+frise -> i_int : i_int = 0
+activate i_int
+i_int  --> frise
+deactivate i_int
+
+loop : i_int<int
+
+end
+
+
+@enduml

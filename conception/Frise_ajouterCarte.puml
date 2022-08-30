@@ -6,7 +6,12 @@ activate int
 int  --> main
 deactivate int
 
-main -> frise :ajouterCarte(int)
+main -> carte : new Carte
+activate carte
+carte  --> main
+deactivate carte
+
+main -> frise :ajouterCarte(carte, int)
 activate frise
 
 frise -> tailleFrise_int : new (len(frise.frise))
@@ -24,9 +29,42 @@ activate i_int
 i_int  --> frise
 deactivate i_int
 
-loop : i_int<int
+loop i_int<int
+frise ->tabProvisoir_TableauCarte : tabProvisoir_TableauCarte[i_int] = frise.frise[i_int]
+activate tabProvisoir_TableauCarte
+tabProvisoir_TableauCarte --> frise
+deactivate tabProvisoir_TableauCarte
 
+frise -> i_int : i_int = i_int+1
+activate i_int
+i_int  --> frise
+deactivate i_int
 end
 
+frise ->tabProvisoir_TableauCarte:tabProvisoir_TableauCarte[i_int] = carte
+activate tabProvisoir_TableauCarte
+tabProvisoir_TableauCarte --> frise
+deactivate tabProvisoir_TableauCarte
 
+frise -> i_int : i_int = i_int+1
+activate i_int
+i_int  --> frise
+deactivate i_int
+
+loop i_int<tailleFrise_int
+frise ->tabProvisoir_TableauCarte : tabProvisoir_TableauCarte[i_int] = frise.frise[i_int-1]
+activate tabProvisoir_TableauCarte
+tabProvisoir_TableauCarte --> frise
+deactivate tabProvisoir_TableauCarte
+
+frise -> i_int : i_int = i_int+1
+activate i_int
+i_int  --> frise
+deactivate i_int
+end
+
+frise ->frise: frise.frise = tabProvisoir_TableauCarte
+
+frise --> main
+deactivate frise
 @enduml

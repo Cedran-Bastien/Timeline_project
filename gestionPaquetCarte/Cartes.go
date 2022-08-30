@@ -52,3 +52,11 @@ func toString(c Carte) (res string) {
 
 	return
 }
+
+func GetEvenement(c Carte) string {
+	return c.evenement
+}
+
+func GetDates(c Carte) int {
+	return c.dates
+}

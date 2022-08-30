@@ -9,7 +9,7 @@ import (
 
 //definition d'un paquet
 type Paquet struct {
-	cartes []Carte
+	Cartes []Carte
 }
 
 //creer un paquet de carte
@@ -27,7 +27,7 @@ func creerPaquet(chemin string) (p Paquet) {
 
 	// remplir le paquet
 	for fileScanner.Scan() {
-		p.cartes = append(p.cartes, creerCarte(fileScanner.Text()))
+		p.Cartes = append(p.Cartes, creerCarte(fileScanner.Text()))
 	}
 	// gestion d'erreur lecture fichier
 	if err := fileScanner.Err(); err != nil {
@@ -44,31 +44,31 @@ func creerPaquet(chemin string) (p Paquet) {
 func PiocherCarte(p Paquet) (c Carte) {
 
 	//recuperation de la carte
-	indiceCarte := rand.Intn(len(p.cartes))
-	c = p.cartes[indiceCarte]
+	indiceCarte := rand.Intn(len(p.Cartes))
+	c = p.Cartes[indiceCarte]
 
 	//verif
-	println(p.cartes)
+	println(p.Cartes)
 	println(toString(c))
 
 	//changement tableau pour enlever carte piocher du paquet
 	var nouveauPaquet []Carte
 	j := 0
-	for i := j; i < len(p.cartes); i++ {
+	for i := j; i < len(p.Cartes); i++ {
 		if i == indiceCarte {
 			break
 		}
-		nouveauPaquet = append(nouveauPaquet, p.cartes[i])
+		nouveauPaquet = append(nouveauPaquet, p.Cartes[i])
 		j++
 	}
 	j++
-	for i := j; i < len(p.cartes)-1; i++ {
-		nouveauPaquet = append(nouveauPaquet, p.cartes[i+1])
+	for i := j; i < len(p.Cartes)-1; i++ {
+		nouveauPaquet = append(nouveauPaquet, p.Cartes[i+1])
 	}
-	p.cartes = nouveauPaquet
+	p.Cartes = nouveauPaquet
 
 	//veriffication
-	println(p.cartes)
+	println(p.Cartes)
 
 	return
 }

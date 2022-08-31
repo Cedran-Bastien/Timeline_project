@@ -1,6 +1,6 @@
 package Jeu
 
-import "Timeline_project/gestionPaquetCarte"
+import "Timeline_project/src/gestionPaquetCarte"
 
 //definition du type frise
 type Frise struct {

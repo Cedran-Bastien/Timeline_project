@@ -7,23 +7,26 @@ import (
 
 //definition d'une carte
 type Carte struct {
-	evenement string
-	dates     int
-	recto     bool
+	Evenement string
+	Dates     int
+	Recto     bool
 }
 
 //creer une carte a partir d'une chaine de caractere([evenement]:[date])
 //toruner face verso par default
-func creerCarte(s string) (c Carte) {
+func CreerCarte(s string) (c Carte) {
 	var evenementAct string
 	var place int = 0
-	for i := place; s[i] != ':' && place < len(s); i++ {
-		evenementAct += string(s[i])
-		place = i
+	for {
+		if s[place] == ':' {
+			break
+		}
+		evenementAct += string(s[place])
+		place++
 	}
 	place += 1
 	var dateAct string
-	for i := place; s[i] != ':' && i < len(s); i++ {
+	for i := place; i < len(s); i++ {
 		dateAct += string(s[i])
 	}
 	intDate, err := strconv.Atoi(dateAct)
@@ -37,22 +40,22 @@ func creerCarte(s string) (c Carte) {
 
 //permet de retourner une carte
 //retourne la valeur
-func retournerCarte(carte Carte) bool {
-	carte.recto = !carte.recto
-	return carte.recto
+func RetournerCarte(carte Carte) bool {
+	carte.Recto = !carte.Recto
+	return carte.Recto
 }
 
 //toString
-func toString(c Carte) (res string) {
-	if c.recto {
-		res = string(c.dates) + " --> " + c.evenement
+func ToStringCarte(c Carte) (res string) {
+	if c.Recto {
+		res = string(c.Dates) + " --> " + c.Evenement
 	} else {
-		res = " ??? --> " + c.evenement
+		res = " ??? --> " + c.Evenement
 	}
 
 	return
 }
 
 func GetDates(c Carte) int {
-	return c.dates
+	return c.Dates
 }

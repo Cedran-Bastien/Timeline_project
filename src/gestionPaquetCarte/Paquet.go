@@ -2,7 +2,6 @@ package gestionPaquetCarte
 
 import (
 	"bufio"
-	"log"
 	"math/rand"
 	"os"
 )
@@ -16,31 +15,31 @@ type Paquet struct {
 //a partir d'un autre paquet
 func CreerPaquetAutre(pioche Paquet, taille int) (p Paquet) {
 	for i := 0; i < taille; i++ {
-		p.Cartes[i] = PiocherCarte(pioche)
+		PiocherCarte(pioche, p)
 	}
 	return p
 }
 
 //creer un paquet de carte
 //a aprtir d'un fichier
-func CreerPaquetFile(chemin string) (p Paquet) {
+func CreerPaquetFile(chemin string) (p Paquet, errOuverture error, errParcour error) {
 	//ouverture du fichier
 	file, err := os.Open(chemin)
 
 	//gestion d'erreur ouverture fichier
 	if err != nil {
-		log.Fatalf("Error when opening file: %s", err)
+		errOuverture = err
 	}
 
 	fileScanner := bufio.NewScanner(file)
 
 	// remplir le paquet
 	for fileScanner.Scan() {
-		p.Cartes = append(p.Cartes, creerCarte(fileScanner.Text()))
+		p.Cartes = append(p.Cartes, CreerCarte(fileScanner.Text()))
 	}
 	// gestion d'erreur lecture fichier
 	if err := fileScanner.Err(); err != nil {
-		log.Fatalf("Error while reading file: %s", err)
+		errParcour = err
 	}
 	//fermetuire du fichier
 	file.Close()
@@ -50,15 +49,48 @@ func CreerPaquetFile(chemin string) (p Paquet) {
 
 // PiocherCarte pioche une carte dans un paquet
 //la retourne
-func PiocherCarte(p Paquet) (retour Carte) {
+func PiocherCarte(p Paquet, pdest Paquet) {
 
 	//recuperation de la carte
 	indiceCarte := rand.Intn(len(p.Cartes))
-	retour = p.Cartes[indiceCarte]
+	retour := p.Cartes[indiceCarte]
 
 	//verif
 	println(p.Cartes)
-	println(toString(retour))
+	println(ToStringCarte(retour))
+
+	//changement tableau pour enlever carte piocher du paquet
+	var nouveauPaquet []Carte
+	j := 0
+	for i := j; i < len(p.Cartes); i++ {
+		if i == indiceCarte {
+			break
+		}
+		nouveauPaquet = append(nouveauPaquet, p.Cartes[i])
+		j++
+	}
+	j++
+	for i := j; i < len(p.Cartes)-1; i++ {
+		nouveauPaquet = append(nouveauPaquet, p.Cartes[i+1])
+	}
+	p.Cartes = nouveauPaquet
+	//ajout de la carte pioché dans le paquet destination
+	pdest.Cartes = append(pdest.Cartes, retour)
+
+	//veriffication
+	println(p.Cartes)
+
+}
+
+func Piocher_Carte(p Paquet) (c Carte) {
+
+	//recuperation de la carte
+	indiceCarte := rand.Intn(len(p.Cartes))
+	retour := p.Cartes[indiceCarte]
+
+	//verif
+	println(p.Cartes)
+	println(ToStringCarte(retour))
 
 	//changement tableau pour enlever carte piocher du paquet
 	var nouveauPaquet []Carte
@@ -83,9 +115,9 @@ func PiocherCarte(p Paquet) (retour Carte) {
 }
 
 //retourne une chaine de caractere representant le paquet
-func ToString(p Paquet) (s string) {
+func ToStringPaquet(p Paquet) (s string) {
 	for i, v := range p.Cartes {
-		s += string(i) + "." + toString(v) + "\n"
+		s += string(i) + "." + ToStringCarte(v) + "\n"
 	}
 	return
 }
